@@ -1,5 +1,5 @@
 ---
-// src/pages/index.astro
+import '../styles/global.css';
 ---
 
 <html lang="es">
@@ -13,20 +13,25 @@
 		<canvas id="canvas"></canvas>
 
 		<main>
+			<div class="terminal-window">
+				<div class="terminal-header">
+					<div class="dot red"></div>
+					<div class="dot yellow"></div>
+					<div class="dot green"></div>
+				</div>
+				<div id="typewriter"></div>
+			</div>
+
 			<div class="content-box">
 				<h2 class="label">Strategic DNA • Software Engineering</h2>
 				<h1 class="main-title">David Arenas</h1>
 				<p class="description">
-					Construyo <strong>arquitecturas full-stack</strong> personalizadas para transformar datos industriales y científicos en decisiones estratégicas.
+					Construyo <strong>arquitecturas full-stack</strong> personalizadas para transformar datos complejos en sistemas de control total.
 				</p>
 				
 				<div class="buttons">
-					<a href="https://eventanalytics.pro" class="btn-primary">Ver UVEA (SaaS)</a>
-					<a href="https://www.linkedin.com/in/davidarenasr1/" class="btn-secondary">Consultoría a medida</a>
-				</div>
-
-				<div class="secondary-links">
-					<a href="https://ciencia-ycocina.vercel.app">Ciencia & Cocina Project →</a>
+					<a href="https://eventanalytics.pro" class="btn-primary">Explorar UVEA</a>
+					<a href="https://www.linkedin.com/in/davidarenasr1/" class="btn-secondary">Consultoría Directa</a>
 				</div>
 			</div>
 
@@ -36,98 +41,41 @@
 		</main>
 
 		<script>
-            // ... (Tu código de partículas actual)
-        </script>
+			// 1. ANIMACIÓN DE LA TERMINAL
+			const lines = [
+				"> Initializing connection...",
+				"> Access granted: admin_arenas",
+				"> Loading DNA_Model_v12...",
+				"> Database: Supabase connected",
+				"> Status: System Online",
+				"> Ready for custom deployment_"
+			];
+			const container = document.getElementById('typewriter');
+			let lineIndex = 0;
 
-		<style is:global>
-			/* Mantengo tu base y añado los toques de UX */
-			html, body {
-				margin: 0; padding: 0; width: 100vw; height: 100vh;
-				background-color: #050505; /* Un negro más profundo */
-				overflow: hidden;
-				display: flex; align-items: center; justify-content: center;
-				font-family: 'Inter', sans-serif;
+			function typeLine() {
+				if (lineIndex < lines.length) {
+					const p = document.createElement('p');
+					p.style.margin = "5px 0";
+					container.appendChild(p);
+					let charIndex = 0;
+					const currentLine = lines[lineIndex];
+					
+					const timer = setInterval(() => {
+						p.textContent += currentLine[charIndex];
+						charIndex++;
+						if (charIndex === currentLine.length) {
+							clearInterval(timer);
+							lineIndex++;
+							setTimeout(typeLine, 500);
+						}
+					}, 30);
+				}
 			}
+			typeLine();
 
-			.main-title {
-				color: white;
-				font-size: 48px;
-				font-weight: 700;
-				margin: 0 0 10px 0;
-				letter-spacing: -1px;
-			}
-
-			.content-box {
-				max-width: 700px;
-				padding: 40px;
-				z-index: 10;
-			}
-
-			.label {
-				color: #3b82f6;
-				text-transform: uppercase;
-				letter-spacing: 5px;
-				font-size: 11px;
-				margin-bottom: 10px;
-				opacity: 0.8;
-			}
-
-			.description {
-				color: #a1a1aa;
-				font-size: 20px;
-				font-weight: 300;
-				line-height: 1.6;
-				margin-bottom: 45px;
-			}
-
-			.buttons {
-				display: flex;
-				gap: 15px;
-				justify-content: center;
-				flex-wrap: wrap;
-			}
-
-			.btn-primary {
-				background: #3b82f6; /* Color de acción para tu SaaS */
-				color: white;
-				padding: 16px 32px;
-				border-radius: 6px; /* Bordes más rectos para look industrial */
-				text-decoration: none;
-				font-weight: 600;
-				transition: 0.3s;
-			}
-
-			.btn-primary:hover { background: #2563eb; transform: translateY(-2px); }
-
-			.btn-secondary {
-				border: 1px solid #3f3f46;
-				color: white;
-				padding: 16px 32px;
-				border-radius: 6px;
-				text-decoration: none;
-				transition: 0.3s;
-			}
-
-			.btn-secondary:hover { background: rgba(255,255,255,0.05); }
-
-			.secondary-links {
-				margin-top: 30px;
-			}
-
-			.secondary-links a {
-				color: #71717a;
-				text-decoration: none;
-				font-size: 14px;
-				transition: 0.3s;
-			}
-
-			.secondary-links a:hover { color: white; }
-
-			.footer {
-				position: absolute; bottom: 30px;
-				color: #3f3f46; font-size: 9px;
-				letter-spacing: 4px; text-transform: uppercase;
-			}
-		</style>
+			// 2. TU LÓGICA DE PARTÍCULAS (Se mantiene igual)
+			// ... (Agrega aquí tu código de canvas anterior)
+		</script>
 	</body>
 </html>
